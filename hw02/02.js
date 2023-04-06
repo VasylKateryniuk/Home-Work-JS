@@ -56,11 +56,12 @@ let floors = prompt("Введіть кількість поверхів в бу�
 let apartmentsPerFloor = prompt("Введіть кількість квартир на поверсі:");
 let numberApartment = prompt("Введіть номер квартири: ");
 
-let apartmentsEntrance = (apartmentsPerFloor * floors) / 4;
-let entranceNumber = Math.ceil(numberApartment / apartmentsEntrance);
-let floorNumber = Math.ceil(
-  (numberApartment % apartmentsEntrance) / apartmentsPerFloor
-);
+let apartmentsEntrance = apartmentsPerFloor * floors;
+let entranceNumber = Math.floor((numberApartment - 1) / apartmentsEntrance) + 1;
+let floorNumber =
+  Math.floor(
+    ((numberApartment - 1) % apartmentsEntrance) / apartmentsPerFloor
+  ) + 1;
 
 alert(
   " Квартира з номером " +
