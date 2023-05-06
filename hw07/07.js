@@ -1,6 +1,7 @@
 //Temperature
 //Оформіть Temperature як функцію, яку параметром передається температура в одній системі, а повертається до іншої. Жодних prompt та console.log у коді бути не повинно, якщо ви хочете надалі користуватися цією функцією будь-де в коді зручно. Чи потрібен блок коду функції для вирішення цього завдання?
 const temperatureConverter = (celsius) => celsius * 1.8 + 32; //(можна без блоку коду)
+temperatureConverter();
 
 //RGB
 //Оформіть Number: RGB як функцію, яку параметрами передаються три числа (r, g, b) => . Функція повинна повертати рядок у нотації #RRGGBB. Використовуючи умови або тернарний оператор Досягніть що б у результаті завжди було 7 символів, навіть коли значення кольору менше 15ти. Чи потрібний блок коду цієї функції?
@@ -32,7 +33,6 @@ console.log(flats(9, 4, 37));
 //Credentials
 //Оформіть завдання String: credentials як функцію без параметрів. Використовуйте функцію capitalize із домашнього завдання з масивів.
 //Функція повинна містити виклики prompt та повертати об'єкт виду {name, surname, fatherName, fullName}
-
 const capitalize = () => {
   let name = prompt("Введіть своє ім'я:");
   let surname = prompt("Введіть своє прізвище:");
@@ -131,7 +131,6 @@ alert(filterWords(inputString, badWords));
 
 //Currency Table
 //Оформіть завдання Currency Table як функцію без параметрів, яка складає отримані дані у внутрішній двовимірний масив, після чого відображає його використовуючи функцію із завдання For Table
-
 {
   const table1 = () => {
     return fetch("https://open.er-api.com/v6/latest/USD")
@@ -175,7 +174,6 @@ alert(filterWords(inputString, badWords));
 
 //Form
 //Оформіть завдання Form як функцію, яка приймає будь-який об'єкт як параметр та створює форму на екрані.
-
 const createTable = (obj) => {
   const arr = [];
   for (const person of persons) {
@@ -231,7 +229,6 @@ createTable(persons);
 //Зробіть узагальнену функцію сортування масиву з об'єктами
 //Функція дозволяє відсортувати будь-який набір даних по імені поля (другий параметр). Третім параметром іде необов'язковий 'Boolean', який у разі true робить сортування за зростанням, у разі false - за спаданням. За замовчуванням (без третього параметра) відбувається сортування за зростанням.
 //Якщо параметр не заданий - всередині функції він дорівнює undefined
-
 var persons1 = [
   { name: "Іван", age: 17 },
   { name: "Марія", age: 35 },
@@ -256,7 +253,6 @@ console.log(sort(persons1, "age")); //сортує за віком за зрос
 //скопіюйте вихідний масив, щоб сортування не змінило оригінал;
 //відсортуйте за допомогою функції попереднього завдання
 //Відображення візьміть із завдання Table
-
 const createTable1 = (arr2, field, bollean = true) => {
   const keys = [];
   for (const person of arr2) {
@@ -295,14 +291,44 @@ const createTable1 = (arr2, field, bollean = true) => {
 };
 createTable1(persons, "name", false);
 
+//Divide
+//Реалізуйте завдання Number: divide у HTML:
+//Скористайтеся наступною інформацією:
+//всі id у HTML стають глобальними змінними (якщо це ім'я не зайняте, id="prompt" не спрацює, функція prompt працюватиме і далі);
+//Будь-який DOM-елемент (те, що в HTML називається тегом або парою тегів) є об'єктом;
+//Для доступу до атрибуту value тегів input використовується властивість value (наприклад, firstNumber.value)
+//Для доступу до вкладеного тексту парних тегів використовується властивість innerHTML (наприклад, divisionResult.innerHTML)
+//Заготівля вище забезпечує запуск функції calcResult з будь-якої зміни тексту в полях введення. Напишіть у ній поділ значень з полів введення та виведіть результат у div.
+const calcResult = () => {
+  const firstNumber = document.getElementById("firstNumber").value;
+  const secondNumber = document.getElementById("secondNumber").value;
+  const divisionResult = document.getElementById("divisionResult");
+  if (secondNumber === "0") {
+    divisionResult.innerHTML = "Ділення на 0 неможливе";
+    return;
+  }
+  const result = Math.floor(firstNumber / secondNumber);
+  divisionResult.innerHTML = " Результат: " + result;
+};
+
 //Calc Func
 //Згадайте перше ДЗ з Javascript, в якому ви робили всякі розрахунки використовуючи код на Javascript. Оформіть це як функцію:
 //знайдіть усі вхідні дані, зробіть їх параметри
 //знайдіть змінну з результатом розрахунків і зробіть так, щоб ваша функція повертала цей результат.
 //Якщо результатів декілька, створіть об'єкт із цих результатів та поверніть його.
-
 const calc = (salary, month, tax = 19.5 / 100) => salary * month * tax;
 alert(
   " Ваша сума податку складатиме: " +
     calc(prompt("Введіть сумму зарплати"), prompt("Введіть кількість місяців"))
 );
+
+//Calc Live
+//Використовуючи приклад із завдання Divide та функцію з Calc Func зробіть кілька полів введення в HTML, змінюючи які ви отримуватимете результат калькуляції в якомусь div.
+const calcResult1 = () => {
+  const salary = document.getElementById("salary").value;
+  const month = document.getElementById("month").value;
+  const outputResult = document.getElementById("outputResult");
+  const tax = 19.5 / 100;
+  const result = salary * month * tax;
+  outputResult.innerHTML = "Результат: " + result;
+};
