@@ -5,22 +5,18 @@
   do {
     i++;
   } while (
-    confirm("Я твій цикл, жми ОК і продовжимо, або СКАСУВАТИ та закінчуємо")
+    !confirm("Я твій цикл, жми СКАСУВАТИ і продовжимо, або ОК та закінчуємо")
   );
 }
 
 //array fill
 //Створіть порожній масив і додавайте в нього елементи, введені користувачем, поки користувач не натисне Скасувати в черговому prompt. Використовуйте push для зручності: push У масиві не повинно бути null після роботи циклу;
 {
-  let arr = [];
+  const arr = [];
   let input;
-  do {
-    input = prompt("Введіть текст");
-    if (input !== null) {
-      arr.push(input);
-    }
-  } while (input !== null);
-
+  while ((input = prompt("Введіть текст")) !== null) {
+    arr.push(input);
+  }
   console.log(arr);
 }
 
@@ -44,25 +40,22 @@
 //Створіть нескінченний цикл, який переривається за допомогою конструкції break, коли Math.random() > 0.9. Код повинен підраховувати кількість ітерацій та вивести це число за допомогою alert.
 
 let counter = 0;
-while (Math.random() < 0.9) {
+while (true) {
   counter++;
   if (Math.random() > 0.9) {
     break;
   }
 }
-alert(" Кількість ітерації складатиме " + counter);
+alert("Кількість ітерацій складає " + counter);
 
 //empty loop
 //Зробіть цикл з prompt, який переривається за натисканням OK і продовжується за натисканням "Скасувати" c порожнім тілом циклу.
 {
-  let i = 0;
-  let input;
-  do {
-    input = prompt(
+  do {} while (
+    prompt(
       " натисни OK якщо хочеш все це завершити, або СКАСУВАТИ та продовжимо "
-    );
-    i++;
-  } while (input !== "");
+    ) === null
+  );
 }
 
 //progression sum
@@ -223,7 +216,8 @@ for (let i = 0; i < cells1.length; i++) {
 
 //DOM: highlight cell
 //Підсвітити комірку, над якою знаходиться курсор миші. Використовуйте події mouseover та mouseout, і style.backgroundColor для підсвічування. Для того, щоб підсвітити правильну комiрку, додайте обробники подій у вкладений цикл, і використовуйте у них ту змінну, яка зберігає <td>. У такому разі замикання вам допоможуть.
-const cells = document.getElementsByTagName("td");
+
+const cells = table.getElementsByTagName("td");
 for (let i = 0; i < cells.length; i++) {
   cells[i].addEventListener("mouseover", () => {
     cells[i].style.backgroundColor = "red";
@@ -246,7 +240,7 @@ for (let i = 0; i < cells.length; i++) {
       () => (cells[i].style.backgroundColor = "")
     );
     const colIndex = cells[i].cellIndex;
-    const rows = document.getElementsByTagName("tr");
+    const rows = table.getElementsByTagName("tr");
     for (let j = 0; j < rows.length; j++) {
       rows[j].cells[colIndex].style.backgroundColor = "blue";
     }
@@ -254,13 +248,13 @@ for (let i = 0; i < cells.length; i++) {
   cells[i].addEventListener("mouseout", () => {
     cells[i].style.backgroundColor = "";
     const colIndex = cells[i].cellIndex;
-    const rows = document.getElementsByTagName("tr");
+    const rows = table.getElementsByTagName("tr");
     for (let j = 0; j < rows.length; j++) {
       rows[j].cells[colIndex].style.backgroundColor = "";
     }
   });
 }
-const rows = document.getElementsByTagName("tr");
+const rows = table.getElementsByTagName("tr");
 for (let j = 0; j < rows.length; j++) {
   rows[j].addEventListener("mouseover", () => {
     rows[j].style.backgroundColor = "yellow";
