@@ -39,19 +39,23 @@ let a = 10;
 //comparison if
 //Розберіть приклад
 //Додайте умову негативного віку на приклад вище. Розставте недостатні (але синтаксично необов'язкові) фігурні дужки. Викиньте зайве з поточного коду
-var age = +prompt("Скільки вам років?", "");
-if (age < 0) {
-  alert("Негативний вік? Оце прикол;)");
-} else if (age < 18) {
-  alert("школяр");
-} else if (age >= 18 && age < 30) {
-  alert("молодь");
-} else if (age >= 30 && age < 45) {
-  alert("зрілість");
-} else if (age >= 45 && age < 60) {
-  alert("захід сонця");
-} else {
-  alert("як пенсія?");
+{
+  var age = +prompt("Скільки вам років?", "");
+  if (age < 0) {
+    alert("Негативний вік? Оце прикол)");
+  } else if (age < 18) {
+    alert("школяр");
+  } else if (age < 30) {
+    alert("молодь");
+  } else if (age < 45) {
+    alert("зрілість");
+  } else if (age < 60) {
+    alert("захід сонця");
+  } else if (age >= 60) {
+    alert("як пенсія?");
+  } else {
+    alert("чи кіборг, чи KERNESS");
+  }
 }
 
 //switch: sizes
@@ -86,16 +90,20 @@ switch (ukSizes) {
 }
 
 //switch: if
-//Перепишіть приклад нижче, використовуючи if.
+//Перепишіть приклад що у ДЗ, використовуючи if.
 let color = prompt("Введіть колір", "");
 if (color === "red") {
   document.write("<div style='background-color: red;'>червоний</div>");
+  document.write(
+    "<div style='background-color: black; color: white;'>чорний</div>"
+  );
 } else if (color === "black") {
   document.write(
     "<div style='background-color: black; color: white;'>чорний</div>"
   );
 } else if (color === "blue") {
   document.write("<div style='background-color: blue;'>синій</div>");
+  document.write("<div style='background-color: green;'>зелений</div>");
 } else if (color === "green") {
   document.write("<div style='background-color: green;'>зелений</div>");
 } else {
