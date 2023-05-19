@@ -33,18 +33,14 @@ console.log(flats(9, 4, 37));
 //Credentials
 //Оформіть завдання String: credentials як функцію без параметрів. Використовуйте функцію capitalize із домашнього завдання з масивів.
 //Функція повинна містити виклики prompt та повертати об'єкт виду {name, surname, fatherName, fullName}
-const capitalize = () => {
+const credentials = () => {
   let name = prompt("Введіть своє ім'я:");
   let surname = prompt("Введіть своє прізвище:");
   let fatherName = prompt("Введіть своє по-батькові:");
-  let str1 =
-    name.slice(0, 1).toUpperCase() + name.slice(1).toLowerCase().trim();
-  let str2 =
-    surname.slice(0, 1).toUpperCase() + surname.slice(1).toLowerCase().trim();
-  let str3 =
-    fatherName.slice(0, 1).toUpperCase() +
-    fatherName.slice(1).toLowerCase().trim();
-  let fullName = str1 + " " + str2 + " " + str3;
+  name = capitalize(name.trim());
+  surname = capitalize(surname.trim());
+  fatherName = capitalize(fatherName.trim());
+  let fullName = name + " " + surname + " " + fatherName;
   return {
     name: name,
     surname: surname,
@@ -52,19 +48,25 @@ const capitalize = () => {
     fullName: fullName,
   };
 };
-console.log(capitalize());
+
+const capitalize = (str) => {
+  let result;
+  result = str[0].toUpperCase() + str.slice(1).toLowerCase();
+  return result;
+};
+
+credentials();
 
 //New line
 //Оформіть завдання String: new line як функцію з параметром-рядком. Функція повинна повертати рядок із справжніми переносами.
-const inputUser = (str) => {
-  return prompt(str).split("\\n").join("\n");
-};
-alert(inputUser("Введіть рядок з переносами"));
+const inputUser = (str) => str.split("\\n").join("\n");
+alert(inputUser("рядок\nіз справжніми\nпереносами"));
 
 //Prompt OR
 //Оформіть завдання Prompt: OR як функцію, яка приймає рядок для prompt та значення за замовчуванням. Функція повинна повертати введений текст або значення за замовчуванням у разі відмови користувача вводити щось.
 // Використовуйте функцію без блоку коду (функція одного виразу).
-const age = () => prompt("Скільки вам років?") || 18;
+const age = (inputAge, defaultAge = 18) =>
+  (inputAge = prompt("Скільки вам років?")) ? inputAge : defaultAge;
 alert(age());
 
 //Login And Password
@@ -90,15 +92,7 @@ console.log(userInput());
 
 //For Table
 //Оформіть завдання For Multiply Table як функцію, яка приймає будь-який масив з масивами, а повертає рядок HTML з тегом <table> і всякими tr та td.
-const table = () => {
-  const multiplicationTable = [
-    [0, 0, 0, 0, 0, 0],
-    [0, 1, 2, 3, 4, 5],
-    [0, 2, 4, 6, 8, 10],
-    [0, 3, 6, 9, 12, 15],
-    [0, 4, 8, 12, 16, 20],
-    [0, 5, 10, 15, 20, 25],
-  ];
+const table = (multiplicationTable) => {
   let str = "<style>table, td {border: 1px solid black;}</style><table>";
   for (let row of multiplicationTable) {
     if (multiplicationTable.indexOf(row) % 2 == 0) {
@@ -114,7 +108,14 @@ const table = () => {
   str += "</table>";
   document.querySelector("body").innerHTML += str;
 };
-table();
+table([
+  [0, 0, 0, 0, 0, 0],
+  [0, 1, 2, 3, 4, 5],
+  [0, 2, 4, 6, 8, 10],
+  [0, 3, 6, 9, 12, 15],
+  [0, 4, 8, 12, 16, 20],
+  [0, 5, 10, 15, 20, 25],
+]);
 
 //Filter Lexics
 //Оформіть завдання Filter Lexics як функцію, яка приймає будь-який рядок для перевірки та масив некоректних слів (['бляха', 'муха', "пляшка", "шабля"], наприклад).
@@ -172,58 +173,58 @@ alert(filterWords(inputString, badWords));
   table1();
 }
 
+// {
+//   const car = {
+//     Name: "chevrolet chevelle malibu",
+//     Cylinders: 8,
+//     Displacement: 307,
+//     Horsepower: 130,
+//     Weight_in_lbs: 3504,
+//     Origin: "USA",
+//     in_production: false,
+//   };
+//   let form = "<form>";
+//   for (let [key, value] of Object.entries(car)) {
+//     let inputType = "text";
+//     if (typeof value === "number") {
+//       inputType = "number";
+//     } else if (typeof value === "boolean") {
+//       inputType = "checkbox";
+//     }
+//     const checkedAttr = value ? "checked" : undefined;
+//     form += `<label>${key}: <input type="${inputType}" name="${key}" value="${value}" ${checkedAttr} /></label>`;
+//   }
+//   form += "</form>";
+//   document.querySelector("body").innerHTML += form;
+// }
+
 //Form
 //Оформіть завдання Form як функцію, яка приймає будь-який об'єкт як параметр та створює форму на екрані.
 const createTable = (obj) => {
-  const arr = [];
-  for (const person of persons) {
-    for (const key of Object.keys(person)) {
-      if (!arr.includes(key)) {
-        arr.push(key);
-      }
+  let form = "<form>";
+  for (let [key, value] of Object.entries(obj)) {
+    let inputType = "text";
+    if (typeof value === "number") {
+      inputType = "number";
+    } else if (typeof value === "boolean") {
+      inputType = "checkbox";
     }
+    const checkedAttr = inputType === "checkbox" && value ? "checked" : "";
+    form += `<label>${key}: <input type="${inputType}" name="${key}" value="${value}" ${checkedAttr} /></label>`;
   }
-  let str2 = "<style>table, td { border: 1px solid; text-align:center}</style>";
-  str2 += "<table><tr>";
-  for (const key of arr) {
-    str2 += "<th>" + key + "</th>";
-  }
-  for (const person of persons) {
-    str2 += "<tr>";
-    for (const key of arr) {
-      if (person[key] !== undefined) {
-        str2 += `<td>${person[key]}</td>`;
-      } else {
-        str2 += "<td></td>";
-      }
-    }
-    str2 += "</tr>";
-  }
-  str2 += "</table>";
-  document.querySelector("body").innerHTML += str2;
+  form += "</form>";
+  document.querySelector("body").innerHTML += form;
 };
-
-const persons = [
-  {
-    name: "Марія",
-    fatherName: "Іванівна",
-    surname: "Іванова",
-    sex: "female",
-  },
-  {
-    name: "Миколай",
-    fatherName: "Іванович",
-    surname: "Іванов",
-    age: 15,
-  },
-  {
-    name: "Петро",
-    fatherName: "Іванович",
-    surname: "Іванов",
-    married: true,
-  },
-];
-createTable(persons);
+const car = {
+  Name: "chevrolet chevelle malibu",
+  Cylinders: 8,
+  Displacement: 307,
+  Horsepower: 130,
+  Weight_in_lbs: 3504,
+  Origin: "USA",
+  in_production: false,
+};
+createTable(car);
 
 //Array of objects sort
 //Зробіть узагальнену функцію сортування масиву з об'єктами
