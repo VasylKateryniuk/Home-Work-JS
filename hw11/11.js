@@ -139,8 +139,42 @@ const RandomHigh = checkResult(
   () => Math.random(),
   (x) => x >= 0.5 && x <= 1
 );
-const AlwaysSayYes = checkResult(confirm, (x) => x === true);
-const respectMe = checkResult(prompt, (x) => x !== "");
 console.log(RandomHigh());
+const AlwaysSayYes = checkResult(confirm, (x) => x === true);
 console.log(AlwaysSayYes("тисни ОК якщо хочеш закінчити"));
-console.log(respectMe("Введіть щось"));
+
+const capitalize = (str) => {
+  if (!str) {
+    return "";
+  }
+  let result;
+  result = str[0].toUpperCase() + str.slice(1).toLowerCase();
+  return result;
+};
+
+const credentials = () => {
+  let name = prompt("Введіть своє ім'я:");
+  let surname = prompt("Введіть своє прізвище:");
+  let fatherName = prompt("Введіть своє по-батькові:");
+  name = capitalize(name.trim());
+  surname = capitalize(surname.trim());
+  fatherName = capitalize(fatherName.trim());
+  let fullName = name + " " + surname + " " + fatherName;
+  return {
+    name: name,
+    surname: surname,
+    fatherName: fatherName,
+    fullName: fullName,
+  };
+};
+credentials();
+
+const respectMe = checkResult(
+  credentials,
+  (credentials) =>
+    credentials.name !== "" &&
+    credentials.surname !== "" &&
+    credentials.fatherName !== ""
+);
+
+console.log(respectMe());
