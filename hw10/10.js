@@ -143,6 +143,7 @@ function createPersonClosure(name, surname) {
       name = newName;
       return name;
     }
+    return name;
   }
   function setSurname(newSurname) {
     if (
@@ -152,6 +153,7 @@ function createPersonClosure(name, surname) {
       surname = newSurname;
       return surname;
     }
+    return surname;
   }
   function setFatherName(newFatherName) {
     if (
@@ -161,6 +163,7 @@ function createPersonClosure(name, surname) {
       fatherName = newFatherName;
       return fatherName;
     }
+    return fatherName;
   }
 
   function setAge(newAge) {
@@ -168,24 +171,16 @@ function createPersonClosure(name, surname) {
       age = newAge;
       return age;
     }
-    return undefined;
+    return age;
   }
 
   function setFullName(fullName) {
     const names = fullName.split(" ");
     if (names.length === 3) {
       const [newSurname, newName, newFatherName] = names;
-      if (
-        typeof newName === "string" &&
-        newName[0] === newName[0].toUpperCase() &&
-        typeof newSurname === "string" &&
-        newSurname[0] === newSurname[0].toUpperCase() &&
-        newFatherName[0] === newFatherName[0].toUpperCase()
-      ) {
-        name = newName;
-        surname = newSurname;
-        fatherName = newFatherName;
-      }
+      setName(newName);
+      setSurname(newSurname);
+      setFatherName(newFatherName);
     }
     return getFullName();
   }
@@ -245,6 +240,7 @@ function createPersonClosureDestruct({
       name = newName;
       return name;
     }
+    return name;
   }
   function setSurname(newSurname) {
     if (
@@ -254,6 +250,7 @@ function createPersonClosureDestruct({
       surname = newSurname;
       return surname;
     }
+    return surname;
   }
   function setFatherName(newFatherName) {
     if (
@@ -263,6 +260,7 @@ function createPersonClosureDestruct({
       fatherName = newFatherName;
       return fatherName;
     }
+    return fatherName;
   }
 
   function setAge(newAge) {
@@ -270,24 +268,16 @@ function createPersonClosureDestruct({
       age = newAge;
       return age;
     }
-    return undefined;
+    return age;
   }
 
   function setFullName(fullName) {
     const names = fullName.split(" ");
     if (names.length === 3) {
       const [newSurname, newName, newFatherName] = names;
-      if (
-        typeof newName === "string" &&
-        newName[0] === newName[0].toUpperCase() &&
-        typeof newSurname === "string" &&
-        newSurname[0] === newSurname[0].toUpperCase() &&
-        newFatherName[0] === newFatherName[0].toUpperCase()
-      ) {
-        name = newName;
-        surname = newSurname;
-        fatherName = newFatherName;
-      }
+      setName(newName);
+      setSurname(newSurname);
+      setFatherName(newFatherName);
     }
     return getFullName();
   }
@@ -311,8 +301,14 @@ const b2 = createPersonClosureDestruct({ name: "Миколай", age: 75 });
 // Напишіть функцію isSorted, яка приймає набір параметрів будь-якого розміру, та повертає true, коли всі параметри - це числа, і кожeн з них більше за попередній параметр
 
 function isSorted(...numbers) {
+  if (
+    typeof numbers[0] !== "number" ||
+    typeof numbers[numbers.length - 1] !== "number"
+  ) {
+    return false;
+  }
   for (let i = 1; i < numbers.length; i++) {
-    if (Number.isNaN(numbers[i]) || numbers[i] < numbers[i - 1]) {
+    if (typeof numbers[i] !== "number" || numbers[i] < numbers[i - 1]) {
       return false;
     }
   }
@@ -363,37 +359,35 @@ function personForm(parent, person) {
   parent.appendChild(fullNameInput);
 
   nameInput.oninput = () => {
-    person.setName(nameInput.value);
-    nameInput.value = person.getName();
+    let newName = person.setName(nameInput.value);
+    nameInput.value = newName;
     fullNameInput.value = person.getFullName();
   };
 
   surnameInput.oninput = () => {
-    person.setSurname(surnameInput.value);
-    surnameInput.value = person.getSurname();
+    let newSurname = person.setSurname(surnameInput.value);
+    surnameInput.value = newSurname;
     fullNameInput.value = person.getFullName();
   };
 
   fatherNameInput.oninput = () => {
-    person.setFatherName(fatherNameInput.value);
-    fatherNameInput.value = person.getFatherName();
+    let newFatherName = person.setFatherName(fatherNameInput.value);
+    fatherNameInput.value = newFatherName;
     fullNameInput.value = person.getFullName();
   };
 
   ageInput.oninput = () => {
     const age = parseInt(ageInput.value);
-    if (!isNaN(age)) {
-      person.setAge(age);
-      ageInput.value = person.getAge();
-    }
+    let newAge = person.setAge(age);
+    ageInput.value = newAge;
   };
 
   fullNameInput.oninput = () => {
-    person.setFullName(fullNameInput.value);
-    fullNameInput.value = person.getFullName();
-    nameInput.value = person.getName();
-    surnameInput.value = person.getSurname();
-    fatherNameInput.value = person.getFatherName();
+    let newFullName = person.setFullName(fullNameInput.value);
+    fullNameInput.value = newFullName;
+    nameInput.value = newName;
+    surnameInput.value = newSurname;
+    fatherNameInput.value = newFatherName;
   };
 }
 
@@ -475,11 +469,11 @@ function getSetForm(parent, getSet) {
       input.type = "text";
     }
 
-    parent.appendChild(input);
     inputs[fieldName] = input;
+
     input.oninput = () => {
       const value = input.value;
-      if (getOrSet === "set") {
+      if (setKey in getSet) {
         getSet[setKey](value);
       } else {
         input.value = getSet[getKey]();
