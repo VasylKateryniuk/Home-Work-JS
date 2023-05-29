@@ -301,29 +301,32 @@ const b2 = createPersonClosureDestruct({ name: "Миколай", age: 75 });
 // Напишіть функцію isSorted, яка приймає набір параметрів будь-якого розміру, та повертає true, коли всі параметри - це числа, і кожeн з них більше за попередній параметр
 
 function isSorted(...numbers) {
-  if (
-    typeof numbers[0] !== "number" ||
-    typeof numbers[numbers.length - 1] !== "number"
-  ) {
-    return false;
+  for (let i = 0; i < numbers.length; i++) {
+    if (isNaN(numbers[i]) || typeof numbers[i] !== "number") {
+      return false;
+    }
   }
   for (let i = 1; i < numbers.length; i++) {
-    if (typeof numbers[i] !== "number" || numbers[i] < numbers[i - 1]) {
+    if (numbers[i] <= numbers[i - 1]) {
       return false;
     }
   }
   return true;
 }
+console.log(isSorted("f", 7, 9, 10)); // false
+console.log(isSorted(7, 9, 10, 12)); // true
+console.log(isSorted(5, 7, 9, "d")); // false
+console.log(isSorted(7, 5, 2, 4, 9)); // false
 
 // Test isSorted
 // Використовуючи циклічне введення в масив (завдання array fill), забезпечте введення даних для isSorted
 
 let arr = [];
-let input = "";
+let input;
 do {
   input = prompt("Введіть числа");
   if (input !== null) {
-    arr.push(input);
+    arr.push(Number(input));
   }
 } while (input !== null);
 const result = isSorted(...arr);
@@ -469,11 +472,11 @@ function getSetForm(parent, getSet) {
       input.type = "text";
     }
 
+    parent.appendChild(input);
     inputs[fieldName] = input;
-
     input.oninput = () => {
       const value = input.value;
-      if (setKey in getSet) {
+      if (getOrSet === "set") {
         getSet[setKey](value);
       } else {
         input.value = getSet[getKey]();
